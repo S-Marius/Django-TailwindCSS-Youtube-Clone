@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content_page %}
+<div class="p-4 sm:ml-64 pt-16 text-white bg-stone-950">
+   <h1 class="font-bold mb-5">Most Viewed videos on Platform</h1>
+   <div class="flex flex-wrap items-center">
+      {% for video in most_viewed_videos %}
+      <a href="{% url 'video_post' video.slug %}" class="sm:w-full md:1/3 xl:w-1/5">
+         <div class="mr-2 mb-10">
+            <img src="{{ video.thumbnail.url }}" class="rounded-xl" alt="">
+            <h3>{{ video.title }}</h3>
+            <p class="text-gray-500 hover:text-gray-400">{{ video.uploader }}</p>
+            <div class="flex items-center space-x-1">
+               <p class="text-gray-400">{{ video.view_counter }} views</p>
+               <span>•</span>
+               <p class="text-gray-400">{{ video.upload_date|date:"F d, Y" }}</p>
+            </div>
+         </div>
+      </a>
+      {% endfor %}
+   </div>
+
+   <h1 class="font-bold my-5">Most Recent videos on Platform</h1>
+   <div class="flex flex-wrap items-center">
+      {% for video in most_recent_videos %}
+      <a href="{% url 'video_post' video.slug %}" class="sm:w-full md:w-1/3 xl:w-1/5">
+         <div class="mr-2">
+            <img src="{{ video.thumbnail.url }}" class="rounded-xl" alt="">
+            <h3>{{ video.title }}</h3>
+            <p class="text-gray-500 hover:text-gray-400">{{ video.uploader }}</p>
+            <div class="flex items-center space-x-1">
+               <p class="text-gray-400">{{ video.view_counter }} views</p>
+               <span>•</span>
+               <p class="text-gray-400">{{ video.upload_date|date:"F d, Y" }}</p>
+            </div>
+         </div>
+      </a>
+      {% endfor %}
+   </div>
+
+   <h1 class="font-bold my-5">Most Recent videos on from Subscriptions</h1>
+   <div class="flex flex-wrap items-center">
+      {% for video in recent_videos_from_subscriptions %}
+      <a href="{% url 'video_post' video.slug %}" class="sm:w-full md:w-1/3 xl:w-1/5">
+         <div class="mr-2">
+            <img src="{{ video.thumbnail.url }}" class="rounded-xl" alt="">
+            <h3>{{ video.title }}</h3>
+            <p class="text-gray-500 hover:text-gray-400">{{ video.uploader }}</p>
+            <div class="flex items-center space-x-1">
+               <p class="text-gray-400">{{ video.view_counter }} views</p>
+               <span>•</span>
+               <p class="text-gray-400">{{ video.upload_date|date:"F d, Y" }}</p>
+            </div>
+         </div>
+      </a>
+      {% endfor %}
+   </div>
+</div>
+{% endblock %}

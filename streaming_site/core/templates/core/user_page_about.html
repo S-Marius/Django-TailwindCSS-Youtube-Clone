@@ -1,0 +1,21 @@
+{% extends 'base_user.html' %}
+
+{% block user_page %}
+<div class="mb-4 bg-stone-950 text-white">
+   <div class="flex justify-between p-3">
+      <div>
+         <h1>Channel Description:</h1>
+         <p>{{ channel_page.channel_description }}</p>
+      </div>
+
+      <div class="space-y-2">
+         <p>Statistics</p>
+         <hr>
+         <p>Registration Date: {{ channel_page.date_joined  }}</p>
+         <hr>
+         <p>{{ channel_page.view_counter }} views</p>
+         <hr>
+      </div>
+   </div>
+</div>
+{% endblock %}

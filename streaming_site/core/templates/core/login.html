@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block main_section %} 
+
+<h2 class="text-center font-bold text-2xl p-3 mt-32">Login Page</h2>
+
+<div class="flex items-center justify-center">
+  <form method="post" class="bg-slate-300 shadow-md rounded p-5 ">
+    {% csrf_token %}
+    <input type="text" name="username" id="username" required placeholder="Username" class="mt-2 pl-3 py-2" /><br />
+  
+    <input type="password" name="password" id="password" required placeholder="Password" class="mt-5 pl-3 py-2" /><br />
+  
+    <div class="flex items-center justify-center mt-5 space-x-5">
+      <button type="submit" class="py-2 px-3 bg-yellow-400 text-yellow-900 rounded shadow hover:bg-yellow-300 transition duration-300">Login</button>
+      <a href="{% url 'register' %}">
+        <button type="button" class="py-2 px-3 bg-red-300 text-gray-700 rounded shadow hover:bg-red-400 transition duration-300">Register</button>
+      </a>
+    </div>
+  </form>
+</div>
+{% endblock %}

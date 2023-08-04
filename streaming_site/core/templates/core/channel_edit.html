@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block main_section %} 
+
+<h2 class="text-center font-bold text-2xl p-3 mt-16">Modify Channel Info</h2>
+
+<div class="flex items-center justify-center">
+  <form method="post" enctype="multipart/form-data" class="bg-slate-300 shadow-md rounded p-5" id="channel_edit_form">
+    {% csrf_token %}
+    <div class="flex flex-col">
+        <!-- Display selected channel banner -->
+        <img src="{{ user.channel_banner.url }}" class="w-64 mr-2" alt="" id="selected_banner">
+        <input type="file" name="channel_banner" value="{{ user.channel_banner.url }}" id="channel_banner" style="display:none;"/>
+        <div class="mt-2 flex items-center justify-center text-center">
+            <label for="channel_banner" class="mb-5 py-2 px-1 w-32 bg-emerald-400 text-white rounded shadow hover:bg-emerald-300 transition duration-300 cursor-pointer">
+                Change Banner
+            </label>
+        </div>
+    </div>
+
+    <div class="flex items-center">
+        <!-- Display selected avatar -->
+        <img src="{{ user.avatar.url }}" class="w-32 mr-2" alt="" id="selected_avatar">
+        <input type="file" name="avatar" value="{{ user.avatar.url }}" id="avatar" style="display:none;"/>
+        <label for="avatar" class="py-2 px-1 bg-blue-400 text-white rounded shadow hover:bg-blue-300 transition duration-300 cursor-pointer">
+            Change Avatar
+        </label>
+    </div>
+
+    <div class="flex flex-col mt-5">
+        <p class="font-light">Channel Description: </p>
+        <textarea name="channel_description" class="p-1" placeholder="Channel description...">{{ user.channel_description }}</textarea>
+    </div>
+    
+    <div class="flex flex-col mt-5">
+        <p class="font-light">Channel Nickname: </p>
+        <input type="text" name="nickname" value="{{ user.nickname }}" class="p-1" placeholder="Nickname..."></input>
+    </div>
+    
+    <div class="flex flex-col mt-5">
+        <p class="font-light">Channel Country: </p>
+        <input type="text" name="country" value="{{ user.country }}" class="p-1" placeholder="Country..."></input>
+    </div>
+
+
+    <div class="flex items-center justify-center mt-5 space-x-5">
+      <button type="submit" class="py-2 px-3 bg-yellow-400 text-yellow-900 rounded shadow hover:bg-yellow-300 transition duration-300">Save Form</button>
+    </div>
+  </form>
+</div>
+
+<script>
+    // Display selected banner
+    const channelBannerInput = document.getElementById('channel_banner');
+    const selectedBanner = document.getElementById('selected_banner');
+
+    channelBannerInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            selectedBanner.src = reader.result;
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Display selected avatar
+    const avatarInput = document.getElementById('avatar');
+    const selectedAvatar = document.getElementById('selected_avatar');
+
+    avatarInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            selectedAvatar.src = reader.result;
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+
+{% endblock %}

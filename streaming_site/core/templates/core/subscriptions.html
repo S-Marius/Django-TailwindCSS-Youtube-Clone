@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content_page %}
+<div class="sm:ml-64 bg-stone-950 text-white pt-16">
+    <div class="flex flex-wrap p-4">
+        {% for video in videos %}
+        <div class="w-1/6 mx-3 mb-5">
+            <a href="{% url 'video_post' video.slug  %}">
+                <img src="{{ video.thumbnail.url }}" class="" alt="">
+                <h3 class="font-bold">{{ video.title }}</h3>
+                <p class="text-gray-400 hover:text-gray-100">{{ video.uploader }}</p>
+                <div class="flex items-center">
+                    <p class="">{{ video.view_counter }} views</p>
+                    <span class="mx-2">•</span>
+                    <p class="">{{ video.upload_date|date:"F d, Y" }}</p>
+                </div>
+            </a>
+        </div>
+        <!-- Add other video information here -->
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

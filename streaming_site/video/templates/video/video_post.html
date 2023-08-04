@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+
+{% block main_section %}
+<div class="p-4 sm:ml-64 pt-10">
+    <div class="grid mb-4">
+        <div class="flex text-white">
+            <div class="p-5">
+                <div class="flex items-center justify-center bg-stone-950 px-32">
+                    <video controls width="900" src="{{ video.video_file.url }}"></video>
+                </div>
+                <p class="font-bold text-2xl my-5">{{ video.title }}</p>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center mb-3">
+                        <img src="{{ video.uploader.avatar.url }}" class="rounded-full w-8 mr-3" alt="">
+                        <div class="flex flex-col mr-10">
+                            <a href="#">{{ video.uploader.nickname }}</a>
+                            <p>{{ video.uploader.subscriber_counter }} Subscribers</p>
+                        </div>
+                        {% if not is_subscribed and request.user != video.uploader %}
+                            {% if user != video.uploader %}
+                                <button class="bg-slate-100 text-stone-950 rounded-full mr-10 px-8 py-2 hover:bg-slate-200">
+                                    <a href="{% url 'subscribe' video.slug %}">Subscribe</a>
+                                </button>
+                            {% endif %}
+                        {% elif is_subscribed and request.user != video.uploader %}
+                            <button class="bg-gray-400 text-stone-950 rounded-full mr-10 px-8 py-2 hover:bg-gray-300">
+                                <a href="{% url 'unsubscribe' video.slug %}">Unsubscribe</a>
+                            </button>
+                        {% endif %}
+                    </div>
+                    <div class="flex items-center mb-5">
+                        <div class="flex items-center rounded-full">
+                            <!-- Video Like/Unlike Link -->
+                            {% if request.user.is_authenticated %}
+                                {% if liked %}
+                                <a href="{% url 'like_unlike_video' video.slug %}" class="flex items-center py-3 px-5 bg-blue-300 rounded-l-full bg-gray-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 pr-2">
+                                        <path d="M7.493 18.75c-.425 0-.82-.236-.975-.632A7.48 7.48 0 016 15.375c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75 2.25 2.25 0 012.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23h-.777zM2.331 10.977a11.969 11.969 0 00-.831 4.398 12 12 0 00.52 3.507c.26.85 1.084 1.368 1.973 1.368H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 01-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227z" />
+                                      </svg>                                  
+                                    {{ video.like_counter }}
+                                </a>
+                                {% else %}
+                                    <a href="{% url 'like_unlike_video' video.slug %}" class="flex items-center py-3 px-5 rounded-l-full bg-gray-800 hover:bg-gray-400 border-r-cyan-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 pr-2">
+                                            <path d="M7.493 18.75c-.425 0-.82-.236-.975-.632A7.48 7.48 0 016 15.375c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75 2.25 2.25 0 012.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23h-.777zM2.331 10.977a11.969 11.969 0 00-.831 4.398 12 12 0 00.52 3.507c.26.85 1.084 1.368 1.973 1.368H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 01-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227z" />
+                                          </svg>    
+                                        {{ video.like_counter }}
+                                    </a>
+                                {% endif %}
+    
+                                <!-- Video Dislike/Undislike Link -->
+                                {% if disliked %}
+                                <a href="{% url 'dislike_undislike_video' video.slug %}" class="flex items-center rounded-r-full py-3 px-5 bg-gray-400 hover:bg-gray-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 pr-2">
+                                        <path d="M15.73 5.25h1.035A7.465 7.465 0 0118 9.375a7.465 7.465 0 01-1.235 4.125h-.148c-.806 0-1.534.446-2.031 1.08a9.04 9.04 0 01-2.861 2.4c-.723.384-1.35.956-1.653 1.715a4.498 4.498 0 00-.322 1.672V21a.75.75 0 01-.75.75 2.25 2.25 0 01-2.25-2.25c0-1.152.26-2.243.723-3.218C7.74 15.724 7.366 15 6.748 15H3.622c-1.026 0-1.945-.694-2.054-1.715A12.134 12.134 0 011.5 12c0-2.848.992-5.464 2.649-7.521.388-.482.987-.729 1.605-.729H9.77a4.5 4.5 0 011.423.23l3.114 1.04a4.5 4.5 0 001.423.23zM21.669 13.773c.536-1.362.831-2.845.831-4.398 0-1.22-.182-2.398-.52-3.507-.26-.85-1.084-1.368-1.973-1.368H19.1c-.445 0-.72.498-.523.898.591 1.2.924 2.55.924 3.977a8.959 8.959 0 01-1.302 4.666c-.245.403.028.959.5.959h1.053c.832 0 1.612-.453 1.918-1.227z" />
+                                      </svg>                                  
+                                    {{ video.dislike_counter }}
+                                </a>
+                                {% else %}
+                                <a href="{% url 'dislike_undislike_video' video.slug %}" class="flex items-center rounded-r-full py-3 px-5 bg-gray-800 hover:bg-gray-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 pr-2">
+                                        <path d="M15.73 5.25h1.035A7.465 7.465 0 0118 9.375a7.465 7.465 0 01-1.235 4.125h-.148c-.806 0-1.534.446-2.031 1.08a9.04 9.04 0 01-2.861 2.4c-.723.384-1.35.956-1.653 1.715a4.498 4.498 0 00-.322 1.672V21a.75.75 0 01-.75.75 2.25 2.25 0 01-2.25-2.25c0-1.152.26-2.243.723-3.218C7.74 15.724 7.366 15 6.748 15H3.622c-1.026 0-1.945-.694-2.054-1.715A12.134 12.134 0 011.5 12c0-2.848.992-5.464 2.649-7.521.388-.482.987-.729 1.605-.729H9.77a4.5 4.5 0 011.423.23l3.114 1.04a4.5 4.5 0 001.423.23zM21.669 13.773c.536-1.362.831-2.845.831-4.398 0-1.22-.182-2.398-.52-3.507-.26-.85-1.084-1.368-1.973-1.368H19.1c-.445 0-.72.498-.523.898.591 1.2.924 2.55.924 3.977a8.959 8.959 0 01-1.302 4.666c-.245.403.028.959.5.959h1.053c.832 0 1.612-.453 1.918-1.227z" />
+                                      </svg>
+                                        {{ video.dislike_counter }}                                  
+                                </a>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        <button onclick="copyLink()" class="mx-5 flex items-center px-2 py-2 bg-gray-700 rounded-full hover:bg-gray-600"><svg
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6 mx-2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
+                            </svg>
+                            Share</button>
+                        <button onclick="toggleDropdown()" class="flex items-center px-2 py-2 bg-gray-700 rounded-full hover:bg-gray-600"><svg
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6 mx-1">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+                            </svg>
+                        </button>
+                        <div id="dropdown" class="hidden bg-white p-2 absolute ml-32 rounded-lg shadow-md">
+                            <!-- Dropdown content goes here -->
+                            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Add to Playlist</a>
+                        </div>
+
+                    </div>
+                </div>
+                <hr>
+                <div class="toggle-description bg-gray-700 rounded-xl p-2 mt-4 hover:bg-gray-600 cursor-pointer">
+                    <div class="flex items-center space-x-2 font-bold">
+                        <p>{{ video.view_counter }} views</p>
+                        <p>{{ video.upload_date|date:"F d, Y" }}</p>
+                    </div>
+                    <p class="description-text">{{ video.description|slice:"200" }}</p>
+                    <button class="toggle-button">open</button>
+                </div>
+                
+                <div class="flex items-center p-2 space-x-5 mt-2">
+                    <p>{{ video.comment_counter }} Comments</p>
+                    <button class="flex items-center p-2 bg-gray-600 rounded-full"><svg
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M6 13.5V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 9.75V10.5" />
+                        </svg>
+                        Order</button>
+                </div>
+                <div class="flex items-center p-2 mb-3 mt-2">
+                    <img src="{{ user.avatar.url }}" class="rounded-full w-8 mr-3" alt="">
+                    <form method="post" action="{% url 'add_video_comment' video.slug %}" class="flex items-center w-full">
+                        {% csrf_token %}
+                        <input type="text" name="comment_text"
+                            class="border-b-2 bg-transparent w-full focus:border-b-gray-500 focus:outline-none focus:ring-0"
+                            placeholder="Insert a comment...">
+                        <button class="ml-5 p-2 bg-cyan-600 text-sm rounded-xl hover:bg-cyan-700">Send Comment</button>
+                    </form>
+                </div>
+                                
+                <div class="p-2">
+                    {% for comment in comments %}
+                    <div class="flex items-center mb-5">
+                        <div>
+                            <a href="{% url 'channel_page' comment.user.username %}">
+                                <img src="{{ comment.user.avatar.url }}" class="rounded-full w-8 mr-3" alt="">
+                            </a>
+                        </div>
+                        <div>
+                            <div class="flex items-center">
+                                <a href="" class="font-bold mr-2">{{ comment.user.username }}</a>
+                                <p class="font-light">{{ comment.comment_date|date:"F d, Y" }}</p>
+                            </div>
+                            <div class="my-2">
+                                <p>{{ comment.text }}</p>
+                            </div>
+                            <div class="flex items-center">
+                                {% if request.user.is_authenticated %}
+                                    {% if comment.user_likes %}
+                                        <a href="{% url 'like_unlike_comment' comment.id %}" class="flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 pr-2">
+                                                <path d="M7.493 18.75c-.425 0-.82-.236-.975-.632A7.48 7.48 0 016 15.375c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75 2.25 2.25 0 012.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23h-.777zM2.331 10.977a11.969 11.969 0 00-.831 4.398 12 12 0 00.52 3.507c.26.85 1.084 1.368 1.973 1.368H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 01-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227z" />
+                                              </svg>    
+                                            {{ comment.user_likes }}
+                                        </a>
+                                    {% else %}
+                                        <a href="{% url 'like_unlike_comment' comment.id %}">Like</a>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <!-- other videos -->
+                <div class="w-64 pr-5 pt-5 pb-5">
+                    {% for recommended_video in recommendation_list %}
+                    <a href="{% url 'video_post' recommended_video.slug %}">
+                        <div class="mb-5">
+                            <img src="{{ recommended_video.thumbnail.url }}" class="rounded-xl" alt="">
+                            <p>{{ recommended_video.title }}</p>
+                            <p>{{ recommended_video.uploader }}</p>
+                            <div class="flex items-center space-x-1 text-gray-400">
+                                <p>{{ recommended_video.view_counter }} views</p>
+                                <span>•</span>
+                                <p>{{ recommended_video.upload_date|date:"F d, Y" }}</p>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const descriptionText = document.querySelector(".description-text");
+        const toggleDescription = document.querySelector(".toggle-description");
+        const toggleButton = document.querySelector(".toggle-button");
+
+        toggleDescription.addEventListener("click", function () {
+            descriptionText.classList.toggle("pb-32");
+            toggleButton.innerText = descriptionText.classList.contains("pb-32") ? "close" : "open";
+        });
+    });
+
+    function copyLink() {
+        const url = window.location.href;
+
+        // Create a temporary input element
+        const tempInput = document.createElement('input');
+        tempInput.value = url;
+
+        // Append the input element to the DOM
+        document.body.appendChild(tempInput);
+
+        // Select and copy the URL from the input element
+        tempInput.select();
+        document.execCommand('copy');
+
+        // Remove the temporary input element
+        document.body.removeChild(tempInput);
+
+        // Show the "Copied link" alert
+        alert('Copied link to clipboard');
+    }
+
+    function toggleDropdown() {
+        const dropdown = document.getElementById('dropdown');
+        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+    }
+</script>
+
+{% endblock %}

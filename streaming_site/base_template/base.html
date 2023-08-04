@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <!-- Common meta tags, CSS, and JavaScript imports -->
+   <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-stone-950">
+   <!-- sidebar -->
+   <aside id="default-sidebar"
+      class="fixed top-14 left-0 z-40 w-64 h-screen"
+      aria-label="Sidebar">
+      <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-stone-950 bg-opacity-75">
+         <ul class="space-y-2 font-medium">
+            <li>
+               <a href="{% url 'main_page' %}"
+                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                     class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
+                     <path
+                        d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+                     <path
+                        d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+                  </svg>
+
+                  <span class="flex-1 ml-3 whitespace-nowrap">Homepage</span>
+               </a>
+            </li>
+            <li>
+               <a href="{% url 'subscriptions' %}"
+                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                     class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
+                     <path
+                        d="M21.721 12.752a9.711 9.711 0 00-.945-5.003 12.754 12.754 0 01-4.339 2.708 18.991 18.991 0 01-.214 4.772 17.165 17.165 0 005.498-2.477zM14.634 15.55a17.324 17.324 0 00.332-4.647c-.952.227-1.945.347-2.966.347-1.021 0-2.014-.12-2.966-.347a17.515 17.515 0 00.332 4.647 17.385 17.385 0 005.268 0zM9.772 17.119a18.963 18.963 0 004.456 0A17.182 17.182 0 0112 21.724a17.18 17.18 0 01-2.228-4.605zM7.777 15.23a18.87 18.87 0 01-.214-4.774 12.753 12.753 0 01-4.34-2.708 9.711 9.711 0 00-.944 5.004 17.165 17.165 0 005.498 2.477zM21.356 14.752a9.765 9.765 0 01-7.478 6.817 18.64 18.64 0 001.988-4.718 18.627 18.627 0 005.49-2.098zM2.644 14.752c1.682.971 3.53 1.688 5.49 2.099a18.64 18.64 0 001.988 4.718 9.765 9.765 0 01-7.478-6.816zM13.878 2.43a9.755 9.755 0 016.116 3.986 11.267 11.267 0 01-3.746 2.504 18.63 18.63 0 00-2.37-6.49zM12 2.276a17.152 17.152 0 012.805 7.121c-.897.23-1.837.353-2.805.353-.968 0-1.908-.122-2.805-.353A17.151 17.151 0 0112 2.276zM10.122 2.43a18.629 18.629 0 00-2.37 6.49 11.266 11.266 0 01-3.746-2.504 9.754 9.754 0 016.116-3.985z" />
+                  </svg>
+                  <span class="flex-1 ml-3 whitespace-nowrap">Subscriptions</span>
+               </a>
+            </li>
+            <hr>
+            {% if user.is_authenticated %}
+            <li>
+               <a href="{% url 'history' %}"
+                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                     class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
+                     <path fill-rule="evenodd"
+                        d="M1.5 5.625c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v12.75c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 011.5 18.375V5.625zM21 9.375A.375.375 0 0020.625 9h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 00.375-.375v-1.5zm0 3.75a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 00.375-.375v-1.5zm0 3.75a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 00.375-.375v-1.5zM10.875 18.75a.375.375 0 00.375-.375v-1.5a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5zM3.375 15h7.5a.375.375 0 00.375-.375v-1.5a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375zm0-3.75h7.5a.375.375 0 00.375-.375v-1.5A.375.375 0 0010.875 9h-7.5A.375.375 0 003 9.375v1.5c0 .207.168.375.375.375z"
+                        clip-rule="evenodd" />
+                  </svg>
+                  <span class="flex-1 ml-3 whitespace-nowrap">History</span>
+               </a>
+            </li>
+            <li>
+               <a href="{% url 'liked_videos' %}"
+                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                     class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
+                     <path
+                        d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                  </svg>
+
+                  <span class="flex-1 ml-3 whitespace-nowrap">Liked</span>
+               </a>
+            </li>
+            {% for playlist in user_playlists  %}
+            <li>
+               <a href="{% url 'playlist' user.username playlist.slug %}"
+                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                     <path fill-rule="evenodd" d="M2.625 6.75a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0zm4.875 0A.75.75 0 018.25 6h12a.75.75 0 010 1.5h-12a.75.75 0 01-.75-.75zM2.625 12a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0zM7.5 12a.75.75 0 01.75-.75h12a.75.75 0 010 1.5h-12A.75.75 0 017.5 12zm-4.875 5.25a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0zm4.875 0a.75.75 0 01.75-.75h12a.75.75 0 010 1.5h-12a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                   </svg>
+                   
+                  <span class="flex-1 ml-3 whitespace-nowrap">{{ playlist.name }}</span>
+               </a>
+            </li>
+            {% endfor %}
+
+            {% endif %}
+            {% if not user.is_authenticated %}
+            <li>
+               <p class="text-white px-2 my-1">Sign in to like videos, comment, and subscribe.</p>
+               <a href="{% url 'login' %}"
+                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                  <svg
+                     class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
+                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" />
+                  </svg>
+                  <span class="flex-1 ml-3 whitespace-nowrap">Sign In</span>
+               </a>
+            </li>
+            <hr>
+            {% endif %}
+            
+            <li class="flex flex-col text-gray-500 my-1">
+               <a>About</a>
+               <a>Copyright</a>
+               <a>Contact Us</a>
+               <a>Developers</a>
+               <p class="mt-2">Copyright @YouMarius 2023</p>
+            </li>
+         </ul>
+      </div>
+   </aside>
+
+   <!-- navbar -->
+   <div class="flex flex-col fixed">
+      <nav class="bg-stone-950 text-white">
+         <div class="p-2 w-screen">
+            <div class="flex items-center justify-between">
+               <div class="flex items-center pl-3">
+                  <a class="flex items-center text-gray-900 rounded-lg dark:text-white font-bold">
+                     <svg xmlns="http://www.w3.org/2000/svg" id="toggleSidebar" fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.5" stroke="currentColor"
+                        class="w-6 h-6 text-cyan-400 hover:text-cyan-800 cursor-pointer">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                           d="M21 7.5l-2.25-1.313M21 7.5v2.25m0-2.25l-2.25 1.313M3 7.5l2.25-1.313M3 7.5l2.25 1.313M3 7.5v2.25m9 3l2.25-1.313M12 12.75l-2.25-1.313M12 12.75V15m0 6.75l2.25-1.313M12 21.75V19.5m0 2.25l-2.25-1.313m0-16.875L12 2.25l2.25 1.313M21 14.25v2.25l-2.25 1.313m-13.5 0L3 16.5v-2.25" />
+                     </svg>
+                  </a>
+                  <a href="{% url 'main_page' %}" class="ml-3 font-bold hover:text-red-400">YouMarius</a>
+               </div>
+
+               <div class="flex items-center hidden lg:block">
+                  <form method="post">
+                     <input type="text"
+                        class="pr-64 py-2 px-5 rounded-full border border-slate-300 text-white bg-gray-800 text-left"
+                        placeholder="Search a video">
+                  </form>
+               </div>
+
+               <!-- secondary nav-->
+               <div class="hidden md:flex items-center space-x-1 text-xl px-5">
+                  {% if user.is_authenticated %}
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="w-6 h-6 mr-5 hover:cursor-pointer hover:text-red-400">
+                     <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                  </svg>
+                  <a href="{% url 'channel_page' user.username %}">
+                     <img src="{{ user.avatar.url }}" class="rounded-full w-8 border border-white" alt="User Avatar">
+                  </a>
+                  {% else %}
+                  <a href="{% url 'login' %}"
+                     class="py-2 px-3 flex items-center text-cyan-400 rounded-2xl border border-slate-300 shadow hover:bg-cyan-300 hover:text-stone-950 transition duration-300">
+                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6 mr-2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                           d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                     </svg>
+                     Sign In</a>
+                  {% endif %}
+               </div>
+
+               <!-- mobile button -->
+               <div class="md:hidden flex items-center">
+                  <button class="mobile-menu-button">
+                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-11 h-11 p-1">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                           d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                     </svg>
+                  </button>
+               </div>
+            </div>
+         </div>
+         <!-- mobile menu -->
+         <div class="hidden mobile-menu text-center">
+            <a href="" class="block py-2 px-4 text-sm hover:bg-gray-200">Create Blog</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="block py-2 px-4 text-sm hover:bg-gray-200">Logout</a>
+            {% else %}
+            <a href="" class="block py-2 px-4 text-sm hover:bg-gray-200">Login</a>
+            {% endif %}
+         </div>
+      </nav>
+   </div>
+   <!-- Content for child templates -->
+   {% block main_section %}{% endblock %}
+   {% block playlist_page %}{% endblock %}
+   {% block content_page %}{% endblock %}
+</body>
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+      const toggleSidebar = document.getElementById('toggleSidebar');
+      const sidebar = document.getElementById('default-sidebar');
+
+      toggleSidebar.addEventListener('click', function () {
+         sidebar.classList.toggle('hidden');
+      });
+   });
+</script>
+<script>
+   // Select necessary elements
+   const btn = document.querySelector("button.mobile-menu-button");
+   const menu = document.querySelector(".mobile-menu");
+   const heroSection = document.querySelector('#section-hero-image');
+   const cards = document.querySelectorAll(".card");
+
+   // Add events
+   btn.addEventListener("click", () => {
+       menu.classList.toggle("hidden");
+   });
+
+   // Set image and properties
+   heroSection.style.backgroundImage = `url(${backgroundImageUrl})`;
+   heroSection.style.backgroundSize = "cover";
+
+   // Add an event listener to the card
+   cards.forEach((card) => {
+       card.addEventListener("click", () => {
+           const url = card.getAttribute("data-url");
+           window.location.href = url;
+       });
+   });
+</script>
+</html>

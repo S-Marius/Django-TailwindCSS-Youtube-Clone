@@ -1,0 +1,20 @@
+{% extends 'base_user.html' %} 
+
+{% block user_page %}
+<div class="mb-4 bg-stone-950 text-white">
+   <div class="flex flex-wrap items-center">
+      {% for video in video_list %}
+      <a href="{% url 'video_post' video.slug  %}">
+         <div class="flex flex-col p-2 mr-2 overflow-hidden w-60 hover:cursor-pointer">
+            <img src="{{ video.thumbnail.url }}" class="" alt="" />
+            <h3>{{ video.title|slice:"54" }} ...</h3>
+            <div class="flex items-center text-gray-400 space-x-3">
+               <p>{{ video.view_counter}} views</p>
+               <p>{{ video.upload_date|date:"F d, Y" }}</p>
+            </div>
+         </div>
+      </a>
+      {% endfor %}
+   </div>
+</div>
+{% endblock %}

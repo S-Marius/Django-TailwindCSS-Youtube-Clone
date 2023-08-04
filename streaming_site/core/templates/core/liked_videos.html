@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content_page %}
+<div class="sm:ml-64 bg-stone-950 text-white pt-16">
+    <div class="flex flex-col p-4 pl-20">
+        <h1 class="font-bold mb-5">Liked Videos</h1>
+        {% for video in liked_videos_list %}
+            <a href="{% url 'video_post' video.slug %}" class="w-full flex p-1 mb-5 hover:bg-stone-900">
+                <img src="{{ video.thumbnail.url }}" class="w-1/6 rounded-xl" alt="">
+                <div class="ml-5">
+                    <h3 class="font-bold">{{ video.title }}</h3>
+                    <div class="flex items-center">
+                        <p class="text-gray-400 hover:text-gray-100">{{ video.uploader }}</p>
+                        <span class="mx-2">•</span>
+                        <p class="text-gray-400">{{ video.view_counter }} views</p>
+                    </div>
+                    <p class="mt-2 text-gray-400">{{ video.description|slice:"70" }}</p>
+                </div>
+            </a>
+        <!-- Add other video information here -->
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

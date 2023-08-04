@@ -1,0 +1,21 @@
+{% extends 'base_user.html' %}
+
+{% block user_page %}
+<div class="mb-4 bg-stone-950 text-white p-2">
+   <h1 class="mb-2">All Playlists:</h1>
+   <div class="flex flex-wrap items-center">
+      {% if playlist_data %}
+         {% for entry in playlist_data %}
+            <div class="mr-5">
+               <a href="{% url 'playlist' username entry.playlist.slug %}">
+                  <div class="flex flex-col overflow-hidden w-60 hover:cursor-pointer">
+                     <img src="{{ entry.first_video.thumbnail.url }}" class="" alt="" />
+                  </div>
+                  <h2 class="my-1 font-bold">{{ entry.playlist.name }}</h2>
+               </a>
+            </div>
+         {% endfor %}
+      {% endif %}
+   </div>
+</div>
+{% endblock %}
